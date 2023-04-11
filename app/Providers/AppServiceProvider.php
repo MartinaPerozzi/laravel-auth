@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+// Importa Paginator Bootstrap
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // PAGINATOR BOOTSTRAP
+        Paginator::useBootstrap();
     }
 }

@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Guest\HomeController as GuestHomeController;
+use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +17,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// }); Questa la sposto in GuestHomeController - e qui scrivo:
+Route::get('/', [GuestHomeController::class, 'index'])->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminHomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Il "verified" va configurato e non lo usiamo ancora, quindi si potrebbe togliere al momento
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::middleware('auth')
+    ->prefix('/admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::resource('projects', ProjectController::class);
+    });
 
-require __DIR__.'/auth.php';
+
+Route::middleware('auth')
+
+    ->prefix('profile') // Dico che il prefisso degli url è sempre profile
+    ->name('profile')   //Dico che il prefisso del name (nomi delle rotte ) è sempre profile
+    ->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+    });
+
+require __DIR__ . '/auth.php';
