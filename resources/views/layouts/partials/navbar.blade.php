@@ -15,7 +15,7 @@
          <div class="collapse navbar-collapse" id="navbarSupportedContent">
              <!-- Left Side Of Navbar -->
              {{-- Questi link li vede solo l'utente autenticato --}}
-             @auth
+             {{-- @auth
                  <ul class="navbar-nav me-auto">
                      <li class="nav-item">
                          <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
@@ -24,8 +24,13 @@
                          <a class="nav-link" href="{{ route('admin.projects.index') }}">{{ __('Projects') }}</a>
                      </li>
                  </ul>
-             @endauth
+             @endauth --}}
 
+             <ul class="navbar-nav me-auto">
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('welcome') }}">{{ __('HomePage') }}</a>
+                 </li>
+             </ul>
 
              <!-- Right Side Of Navbar -->
              <ul class="navbar-nav ml-auto">
@@ -47,7 +52,11 @@
                          </a>
 
                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                             <a class="dropdown-item" href="{{ url('dashboard') }}">{{ __('Dashboard') }}</a>
+                             @auth
+                                 <a class="dropdown-item" href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a>
+
+                                 <a class="dropdown-item" href="{{ route('admin.projects.index') }}">{{ __('Projects') }}</a>
+                             @endauth
                              <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
                              <a class="dropdown-item" href="{{ route('logout') }}"
                                  onclick="event.preventDefault();

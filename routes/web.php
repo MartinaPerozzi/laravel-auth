@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // }); Questa la sposto in GuestHomeController - e qui scrivo:
-Route::get('/', [GuestHomeController::class, 'index'])->name('welcome');
+Route::get('/welcome', [GuestHomeController::class, 'index'])->name('welcome');
+
+Route::get('/Detail', [GuestHomeController::class, 'show'])->name('detail');
 
 Route::get('/dashboard', [AdminHomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Il "verified" va configurato e non lo usiamo ancora, quindi si potrebbe togliere al momento
