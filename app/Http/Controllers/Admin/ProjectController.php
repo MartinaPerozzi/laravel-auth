@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        //  AGGIUNGO LA ROTTA CREATE
+        return view('admin.projects.create');
     }
 
     /**
@@ -38,7 +40,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validation($request->all());
     }
 
     /**
@@ -73,7 +75,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $data = $this->validation($request->all(), $project->id);
     }
 
     /**
@@ -85,5 +87,29 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    private function validation($data)
+    {
+        $validator = Validator::make(
+            $data,
+            [
+                'title' => 'required|string|max:50',
+                'text' => 'string|max:100',
+                "img" => 'nullable|string',
+
+            ],
+            [
+                'title.required' => 'The Title is required',
+                'title.string' => 'The title must be a string',
+                'title.max' => 'The max length of the title must be 50 characters',
+
+                'text.string' => 'The text must be a string',
+                'text.max' => 'The max length of the text must be 100 characters',
+
+                'img.string' => 'The image must be a string, please insert a valide url',
+            ]
+        )->validate();
+        return $validator;
     }
 }

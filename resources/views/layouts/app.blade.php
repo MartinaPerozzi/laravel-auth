@@ -28,6 +28,7 @@
         @include('layouts.partials.navbar')
 
         <main class="">
+            @yield('actions')
             <h1>@yield('title')</h1>
             @yield('content')
         </main>

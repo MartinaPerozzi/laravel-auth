@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-
+@section('actions')
+    <div class="container">
+        <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">Create new</a>
+    </div>
+@endsection
 @section('content')
     <div class="container">
         <h1 class="mb-3">Projects</h1>
@@ -8,9 +12,9 @@
             <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Titolo</th>
+                    <th scope="col">Title</th>
                     <th scope="col">Abstract</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
