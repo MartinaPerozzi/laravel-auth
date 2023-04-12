@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('actions')
-    <div class="container">
-        <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">Create new</a>
+    <div class="container mt-4 mb-3">
+        <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">Create new Project</a>
     </div>
 @endsection
 @section('content')
@@ -25,6 +25,8 @@
                         <td>{{ $project->getAbstract() }}</td>
                         <td>
                             <a href="{{ route('admin.projects.show', $project) }}"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{ route('admin.projects.edit', $project) }}"><i
+                                    class="fa-solid fa-pen ms-3"></i></i></a>
                         </td>
                     </tr>
 
