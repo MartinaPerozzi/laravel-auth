@@ -1,9 +1,15 @@
 @extends('layouts.app');
 
 {{-- @section('title', $project->title); --}}
+@section('actions')
+    <div class="container mt-3">
+        <a class="btn btn-primary mb-3" href="{{ route('admin.projects.index') }}">Go Back</a>
+    </div>
+@endsection
+
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-2">
 
         @if ($errors->any())
             <div class="alert alert-danger mt-3">

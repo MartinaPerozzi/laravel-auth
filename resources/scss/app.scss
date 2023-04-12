@@ -8,3 +8,7 @@ a {
 .rotate-180 {
     transform: rotate(180deg);
 }
+
+i:not(.fa-caret-down) {
+    color: $primary;
+}

@@ -7,9 +7,5 @@
         <h2>{{ $project->title }}</h2>
         <p>{{ $project->text }}</p>
         <img src="{{ $project->image }}" alt="Project Image">
-
-
-
-
     </div>
 @endsection
