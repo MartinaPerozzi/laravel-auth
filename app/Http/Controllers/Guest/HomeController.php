@@ -12,7 +12,6 @@ class HomeController extends Controller
     // La funzione che era in web.php dove ho sostituito con l'AdminHomeController::class
     public function index()
     {
-        $projects = Project::all();
         return view('guest.welcome', compact('projects'));
     }
 

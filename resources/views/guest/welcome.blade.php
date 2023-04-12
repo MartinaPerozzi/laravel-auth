@@ -10,6 +10,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $project->title }}</h5>
                             <p class="card-text">{{ $project->getAbstract(10) }}</p>
+
                             <a href="{{ route('detail', $project) }}" class="btn btn-primary">See More</a>
                         </div>
                     </div>
@@ -18,10 +19,8 @@
                 <h4>No Projects found</h4>
             @endforelse
         </div>
-    </div>
-
-
-    </div>
-
+        <div class="mb-4">
+            {{ $projects->links() }}
+        </div>
     </div>
 @endsection
