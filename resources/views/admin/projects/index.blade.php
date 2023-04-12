@@ -11,9 +11,59 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Abstract</th>
+                    <th scope="col">
+                        <a {{-- Operatore ternario per gestire SORT&ORDER --}}
+                            href="{{ route('admin.projects.index') }}?sort=id&order={{ $sort == 'id' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Id</a>
+
+                        @if ($sort == 'id')
+                            {{-- se si sceglie di gestire a partire dall'id quindi sort=id appare la freccia e cambia rotazione se ascendente o discendente --}}
+                            <a
+                                href="{{ route('admin.projects.index') }}?sort=id&order={{ $sort == 'id' && $order != 'DESC' ? 'DESC' : 'ASC' }}">
+                                <i
+                                    class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
+                        @endif
+                    </th>
+                    {{-- TITLE --}}
+                    <th scope="col"><a
+                            href="{{ route('admin.projects.index') }}?sort=title&order={{ $sort == 'title' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Title</a>
+
+                        @if ($sort == 'title')
+                            <a
+                                href="{{ route('admin.projects.index') }}?sort=title&order={{ $sort == 'title' && $order != 'DESC' ? 'DESC' : 'ASC' }}"><i
+                                    class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
+                        @endif
+                    </th>
+                    {{-- TEXT --}}
+                    <th scope="col"><a
+                            href="{{ route('admin.projects.index') }}?sort=text&order={{ $sort == 'text' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Abstract</a>
+
+                        @if ($sort == 'text')
+                            <a
+                                href="{{ route('admin.projects.index') }}?sort=text&order={{ $sort == 'text' && $order != 'DESC' ? 'DESC' : 'ASC' }}"><i
+                                    class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
+                        @endif
+                    </th>
+                    <th scope="col">
+                        <a
+                            href="{{ route('admin.projects.index') }}?sort=created_at&order={{ $sort == 'created_at' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Created</a>
+
+                        @if ($sort == 'created_at')
+                            <a
+                                href="{{ route('admin.projects.index') }}?sort=created_at&order={{ $sort == 'created_at' && $order != 'DESC' ? 'DESC' : 'ASC' }}"><i
+                                    class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
+                        @endif
+                    </th>
+                    <th scope="col">
+                        <a
+                            href="{{ route('admin.projects.index') }}?sort=updated_at&order={{ $sort == 'updated_at' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Updated</a>
+
+                        @if ($sort == 'updated_at')
+                            <a
+                                href="{{ route('admin.projects.index') }}?sort=updated_at&order={{ $sort == 'updated_at' && $order != 'DESC' ? 'DESC' : 'ASC' }}"><i
+                                    class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
+                        @endif
+                    </th>
+
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -23,6 +73,8 @@
                         <th scope="row">{{ $project->id }}</th>
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->getAbstract() }}</td>
+                        <td>{{ $project->created_at }}</td>
+                        <td>{{ $project->updated_at }}</td>
                         <td>
                             <a href="{{ route('admin.projects.show', $project) }}"><i class="fa-solid fa-eye"></i></a>
                             <a href="{{ route('admin.projects.edit', $project) }}"><i class="fa-solid fa-pen ms-3"></i></a>
