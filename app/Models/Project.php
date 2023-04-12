@@ -29,8 +29,8 @@ class Project extends Model
         while (count($projects)) {
             // Allora aggiungi allo slug originale un trattino e un numero
             $possible_slug = $original_slug . "-" . $i;
-            // Riprendi nel singolo progetto lo slug e il possibile slug;
-            $projects = Project::where('slug', $possible_slug)->get();
+            // Riprendi nel singolo progetto lo slug e il possibile slug; Modello 'eloquent' che matcha la mia tabella db
+            $projects = Project::where('slug', '=', $possible_slug)->get();
             // Incrementa di uno il numero ogni volta
             $i++;
         }
@@ -38,13 +38,14 @@ class Project extends Model
         return $possible_slug;
     }
 
-    protected function getCreatedAttribute($value)
+    // FUNZIONI PER FORMATTARE DATE
+    public function getCreatedAttribute()
     {
-        return date('d/m/Y H:i', strtotime($value));
+        return date('d/m/Y H:i', strtotime($this->created_at));
     }
 
-    protected function getUpdatedAttribute($value)
+    public function getUpdatedAttribute()
     {
-        return date('d/m/Y H:i', strtotime($value));
+        return date('d/m/Y H:i', strtotime($this->updated_at));
     }
 }
