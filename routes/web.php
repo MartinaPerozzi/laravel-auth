@@ -40,8 +40,8 @@ Route::middleware('auth')
 
 Route::middleware('auth')
 
-    ->prefix('profile') // Dico che il prefisso degli url è sempre profile
-    ->name('profile')   //Dico che il prefisso del name (nomi delle rotte ) è sempre profile
+    ->prefix('/profile') // Dico che il prefisso degli url è sempre profile
+    ->name('profile.')   //Dico che il prefisso del name (nomi delle rotte ) è sempre profile
     ->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('update');
