@@ -46,7 +46,11 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
 
-            <button type="submit" class="btn btn-primary mt-4">Save</button>
+            <div class="image-edit mt-3">
+                <img src="{{ $project->image }}" alt="Image">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4 mb-4">Save</button>
         </form>
     </div>
 @endsection
