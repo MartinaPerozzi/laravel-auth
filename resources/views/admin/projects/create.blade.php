@@ -29,10 +29,10 @@
                 </div>
             @enderror
 
-            <label for="img" class="form-label">Image</label>
-            <input type="file" class="form-control @error('img') is-invalid @enderror" id="img" name="img"
-                value="{{ old('img') }}" />
-            @error('img')
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image"
+                value="{{ old('image') }}" />
+            @error('image')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
 
