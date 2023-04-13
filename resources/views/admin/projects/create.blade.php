@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="form-add container mt-4">
-        <form action="{{ route('admin.projects.store') }}" method="POST" enctype=“multipart/form-data”>
+        <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <label for="title" class="form-label ">Title</label>

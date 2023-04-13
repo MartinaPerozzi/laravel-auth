@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype=“multipart/form-data”>
+        <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data">
             @method('PUT') @csrf
 
             <label for="title" class="form-label">Title</label>

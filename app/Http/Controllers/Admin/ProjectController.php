@@ -56,12 +56,12 @@ class ProjectController extends Controller
         $data = $this->validation($request->all());
         // \Log::debug($data);
         // Metodo con helper Arr per cercare in un array l'elemento chiave 'image'
-        // if (Arr::exists($data, 'image')) {
-        //     // Carico l'immagine nella cartella del progetto con metodo Storage
-        //     $path = Storage::put('', $data['image']);
-        //     // Salvalo nel DB
-        //     $data['image'] = $path;
-        // };
+        if (Arr::exists($data, 'image')) {
+            // Carico l'immagine nella cartella del progetto con metodo Storage
+            $path = Storage::put('uploads/projects', $data['image']);
+            // Salvo nel DB
+            $data['image'] = $path;
+        };
 
         // Gestione dello SLUG- PARTE 1 in Model Project.php
         $project = new Project;
@@ -109,19 +109,19 @@ class ProjectController extends Controller
         $data = $this->validation($request->all());
         // \Log::debug($data);
 
-        // if (Arr::exists($data, 'image')) {
-        //     // \Log::debug('prova');
-        //     // SE c'è già un'immagine nell'array $data
-        //     if ($project->image) {
-        //         // elimino l'immagine presente
-        //         Storage::delete($project->image);
-        //         // ALTRIMENTI, se non ci sono immagini
-        //     } else {
-        //         // Carico l'immagine nella cartella del progetto con metodo Storage::put
-        //         $path = Storage::put('uploads/projects', $data['image']);
-        //         $data['image'] = $path;
-        //     };
-        // };
+        if (Arr::exists($data, 'image')) {
+            // \Log::debug('prova');
+            // SE c'è già un'immagine nell'array $data
+            if ($project->image) {
+                // elimino l'immagine presente
+                Storage::delete($project->image);
+                // ALTRIMENTI, se non ci sono immagini
+            } else {
+                // Carico l'immagine nella cartella del progetto con metodo Storage::put
+                $path = Storage::put('uploads/projects', $data['image']);
+                $data['image'] = $path;
+            };
+        };
 
         $project->fill($request->all());
         $project->slug = Project::generateUniqueSlug($project->title);
@@ -143,9 +143,9 @@ class ProjectController extends Controller
         // Creo una variabile per salvarmi l'id--> per la variabile FLASH
         $id_project = $project->id;
         // Quando elimino un elemento controllo c'era un'immagine, nel caso la elimino
-        // if ($project->image) {
-        //     Storage::delete($project->image);
-        // }
+        if ($project->image) {
+            Storage::delete($project->image);
+        }
 
         $project->delete();
         return to_route('admin.projects.index')
@@ -173,7 +173,7 @@ class ProjectController extends Controller
                 'text.max' => 'The max length of the text must be 100 characters',
 
                 'image.image' => 'Please upload a file',
-                // 'image.mimes' => 'The format of the file must be: jpg, png or jpeg',
+                'image.mimes' => 'The format of the file must be: jpg, png or jpeg',
             ]
         )->validate();
         return $validator;
