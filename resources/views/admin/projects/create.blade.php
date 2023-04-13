@@ -1,9 +1,6 @@
 @extends('layouts.app')
-
-@section('page-name', 'Modifica DB')
-
+{{-- TO DO --}}
 @section('content')
-
     <section class="container form-contain">
 
         <div class="">
@@ -30,7 +27,7 @@
                     <div class="d-flex flex-column">
 
                         {{-- title --}}
-                        <div class="">
+                        <div class="title-container">
                             <label for="title" class="form-label">
                                 Title
                             </label>
@@ -45,7 +42,7 @@
                         </div>
 
                         {{-- Text --}}
-                        <div class="mt-1">
+                        <div class="text-container mt-1">
                             <label for="text" class="form-label">
                                 Text
                             </label>
@@ -56,8 +53,8 @@
                                 </div>
                             @enderror
                         </div>
-
-                        <div class="mt-1">
+                        {{-- Image --}}
+                        <div class="image-container mt-1">
                             <div class="">
                                 <label for="image" class="form-label">
                                     Image
@@ -72,13 +69,14 @@
                                 @enderror
                             </div>
                         </div>
+                        {{-- Button --}}
                         <div class="align-self-end">
                             <button type="submit" class="btn btn-primary mt-4">
                                 Salva
                             </button>
                         </div>
                     </div>
-                    {{-- Right Side --}}
+                    {{-- Right Side Image Preview --}}
                     <div class="d-flex flex-column">
                         <div class="image-upload border p-2">
                             <img src="{{ $project->getImageUri() }}" alt="{{ $project->title }}" id="image_preview">
@@ -90,11 +88,9 @@
             </div>
         </div>
     </section>
-
 @endsection
 
 @section('scripts')
-
     <script>
         const imageEl = document.getElementById('image');
         const imagePreviewEl = document.getElementById('image_preview');
@@ -112,5 +108,4 @@
                 }
             });
     </script>
-
 @endsection
