@@ -54,10 +54,11 @@ class ProjectController extends Controller
     {
         // Metodo che fa la validazione
         $data = $this->validation($request->all());
-        // // Metodo con helper Arr per cercare in un array l'elemento chiave 'image'
+        // \Log::debug($data);
+        // Metodo con helper Arr per cercare in un array l'elemento chiave 'image'
         // if (Arr::exists($data, 'image')) {
         //     // Carico l'immagine nella cartella del progetto con metodo Storage
-        //     $path = Storage::put('uploads/projects', $data['image']);
+        //     $path = Storage::put('', $data['image']);
         //     // Salvalo nel DB
         //     $data['image'] = $path;
         // };
@@ -107,10 +108,9 @@ class ProjectController extends Controller
         // \Log::debug('update');
         $data = $this->validation($request->all());
         // \Log::debug($data);
-        // // $data = $request->all();
 
         // if (Arr::exists($data, 'image')) {
-        //     \Log::debug('prova');
+        //     // \Log::debug('prova');
         //     // SE c'è già un'immagine nell'array $data
         //     if ($project->image) {
         //         // elimino l'immagine presente
@@ -143,9 +143,9 @@ class ProjectController extends Controller
         // Creo una variabile per salvarmi l'id--> per la variabile FLASH
         $id_project = $project->id;
         // Quando elimino un elemento controllo c'era un'immagine, nel caso la elimino
-        if ($project->image) {
-            Storage::delete($project->image);
-        }
+        // if ($project->image) {
+        //     Storage::delete($project->image);
+        // }
 
         $project->delete();
         return to_route('admin.projects.index')
@@ -161,8 +161,8 @@ class ProjectController extends Controller
             [
                 'title' => 'required|string|max:50',
                 'text' => 'string|max:100',
-                // 'image' => 'nullable|image|mimes:jpg,png,jpeg',
-                'image' => 'nullable|string'
+                'image' => 'nullable|image|mimes:jpg,png,jpeg',
+                // 'image' => 'nullable|string'
             ],
             [
                 'title.required' => 'The Title is required',
