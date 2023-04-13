@@ -38,10 +38,10 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, Project $project)
     {
         //  AGGIUNGO LA ROTTA CREATE
-        return view('admin.projects.create');
+        return view('admin.projects.create', compact('project'));
     }
 
     /**
@@ -93,7 +93,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.create', compact('project'));
     }
 
     /**
