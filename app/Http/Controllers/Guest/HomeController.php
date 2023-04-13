@@ -20,4 +20,11 @@ class HomeController extends Controller
     {
         return view('guest.show', compact('project'));
     }
+
+    // public function show()
+    // {
+    //     $project = Project::all();
+
+    //     return view('guest.show', compact('project'));
+    // }
 }

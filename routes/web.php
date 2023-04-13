@@ -24,7 +24,7 @@ Route::get('/', [GuestHomeController::class, 'index'])->name('home');
 
 Route::get('/welcome', [GuestHomeController::class, 'index'])->name('welcome');
 // Prova di aggiungere una show per gli users-frontend
-Route::get('/Detail', [GuestHomeController::class, 'show'])->name('detail');
+Route::get('/detail', [GuestHomeController::class, 'show'])->name('detail');
 
 Route::get('/dashboard', [AdminHomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Il "verified" va configurato e non lo usiamo ancora, quindi si potrebbe togliere al momento

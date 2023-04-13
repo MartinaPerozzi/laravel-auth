@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 {{-- @section('title', $project->title); --}}
 @section('actions')
@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="container mt-2">
-
+        {{-- Lista errori --}}
         @if ($errors->any())
             <div class="alert alert-danger mt-3">
                 <h4>Please correct the following mistakes: </h4>
@@ -21,6 +21,7 @@
                 </ul>
             </div>
         @endif
+
         <form action="{{ route('admin.projects.update', $project) }}" method="POST">
             @method('PUT') @csrf
 
@@ -38,10 +39,10 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
 
-            <label for="img" class="form-label">Image</label>
-            <input type="text" class="form-control @error('img') is-invalid @enderror" id="img" name="img"
+            <label for="image" class="form-label">Image</label>
+            <input type="text" class="form-control @error('image') is-invalid @enderror" id="image" name="image"
                 value="{{ $project->image }}" />
-            @error('img')
+            @error('image')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
 
