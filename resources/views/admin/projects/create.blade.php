@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 @section('title')
     <div class="container">
@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="form-add container mt-4">
-        <form action="{{ route('admin.projects.store') }}" method="POST">
+        <form action="{{ route('admin.projects.store') }}" method="POST" enctype=“multipart/form-data”>
             @csrf
 
             <label for="title" class="form-label ">Title</label>
@@ -30,7 +30,7 @@
             @enderror
 
             <label for="img" class="form-label">Image</label>
-            <input type="text" class="form-control @error('img') is-invalid @enderror" id="img" name="img"
+            <input type="file" class="form-control @error('img') is-invalid @enderror" id="img" name="img"
                 value="{{ old('img') }}" />
             @error('img')
                 <div class="invalid-feedback">{{ $message }}</div>

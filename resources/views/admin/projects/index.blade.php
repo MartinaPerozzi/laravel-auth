@@ -11,6 +11,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    {{-- ID --}}
                     <th scope="col">
                         <a {{-- Operatore ternario per gestire SORT&ORDER --}}
                             href="{{ route('admin.projects.index') }}?sort=id&order={{ $sort == 'id' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Id</a>
@@ -43,6 +44,7 @@
                                     class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
                         @endif
                     </th>
+                    {{-- CREATED --}}
                     <th scope="col">
                         <a
                             href="{{ route('admin.projects.index') }}?sort=created_at&order={{ $sort == 'created_at' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Created</a>
@@ -53,6 +55,7 @@
                                     class="fa-solid fa-caret-down ms-2 @if ($order == 'DESC') rotate-180 @endif"></i></a>
                         @endif
                     </th>
+                    {{-- UPDATED --}}
                     <th scope="col">
                         <a
                             href="{{ route('admin.projects.index') }}?sort=updated_at&order={{ $sort == 'updated_at' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Updated</a>
@@ -73,7 +76,7 @@
                         <th scope="row">{{ $project->id }}</th>
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->getAbstract() }}</td>
-                        <td>{{ $project->getCreatedAttribute() }}</td>
+                        <td>{{ $project->created_at }}</td>
                         <td>{{ $project->getUpdatedAttribute() }}</td>
                         <td>
                             <a href="{{ route('admin.projects.show', $project) }}"><i class="fa-solid fa-eye"></i></a>

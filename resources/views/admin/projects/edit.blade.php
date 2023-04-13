@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.projects.update', $project) }}" method="POST">
+        <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype=“multipart/form-data”>
             @method('PUT') @csrf
 
             <label for="title" class="form-label">Title</label>
@@ -40,14 +40,14 @@
             @enderror
 
             <label for="image" class="form-label">Image</label>
-            <input type="text" class="form-control @error('image') is-invalid @enderror" id="image" name="image"
+            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image"
                 value="{{ $project->image }}" />
             @error('image')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
 
             <div class="image-edit mt-3">
-                <img src="{{ $project->image }}" alt="Image">
+                <img src="{{ $project->getImageUri() }}" alt="Image">
             </div>
 
             <button type="submit" class="btn btn-primary mt-4 mb-4">Save</button>

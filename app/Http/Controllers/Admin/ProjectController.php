@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+// Helper per gli array
+use Illuminate\Support\Arr;
+// Helper per lo Storage
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -22,7 +26,7 @@ class ProjectController extends Controller
 
         // SORT & ORDER
         $sort = (!empty($sort_request = $request->get('sort'))) ? $sort_request : 'updated_at';
-        $order = (!empty($order_request = $request->get('order'))) ? $order_request : 'DESC';
+        $order = (!empty($order_request = $request->get('order'))) ? $order_request : 'ASC';
 
         $projects = Project::orderBy($sort, $order)->paginate(10)->withQueryString();
 
@@ -34,7 +38,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //  AGGIUNGO LA ROTTA CREATE
         return view('admin.projects.create');
@@ -48,13 +52,23 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        // Metodo che fa la validazione
         $data = $this->validation($request->all());
+        // Metodo con helper Arr per cercare in un array l'elemento chiave 'image'
+        if (Arr::exists($data, 'image')) {
+            // Carico l'immagine nella cartella del progetto con metodo Storage
+            $path = Storage::put('uploads/projects', $data['image']);
+            $data['image'] = $path;
+        };
+
         // Gestione dello SLUG- PARTE 1 in Model Project.php
         $project = new Project;
         $project->fill($request->all());
         $project->slug = Project::generateUniqueSlug($project->title);
         $project->save();
-        return to_route('admin.projects.show', $project);
+        return to_route('admin.projects.show', $project)
+            ->with('message_type', "success")
+            ->with('message-content', "Post $project->title creato con successo!");;
     }
 
     /**
@@ -89,13 +103,30 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $this->validation($request->all(), $project->id);
+        // \Log::debug('update');
+        $data = $this->validation($request->all());
+        // $data = $request->all();
+
+        if (Arr::exists($data, 'image')) {
+            // SE il progetto ha già una foto caricata
+            if ($project->image) {
+                // elimino l'immagine presente
+                Storage::delete($project->image);
+                // ALTRIMENTI, se non ci sono foto
+            } else {
+                // Carico l'immagine nella cartella del progetto con metodo Storage::put
+                $path = Storage::put('uploads/projects', $data['image']);
+                $data['image'] = $path;
+            };
+        };
 
         $project->fill($request->all());
         $project->slug = Project::generateUniqueSlug($project->title);
         $project->save();
 
-        return to_route('admin.projects.show', $project);
+        return to_route('admin.projects.show', $project)
+            ->with('message_type', "success")
+            ->with('message-content', "Post $project->title modificato con successo");
     }
 
     /**
@@ -106,10 +137,18 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        // Creo una variabile per salvarmi l'id--> per la variabile FLASH
+        $id_project = $project->id;
+        // Quando elimino un elemento controllo c'era un'immagine, nel caso la elimino
+        if ($project->image) Storage::delete($project->image);
+
         $project->delete();
-        return to_route('admin.projects.index');
+        return to_route('admin.projects.index')
+            ->with('message_type', "danger")
+            ->with('message-content', "Post $id_project eliminato con successo!");;
     }
 
+    // VALIDATION
     private function validation($data)
     {
         $validator = Validator::make(
@@ -117,8 +156,7 @@ class ProjectController extends Controller
             [
                 'title' => 'required|string|max:50',
                 'text' => 'string|max:100',
-                "img" => 'nullable|string',
-
+                "img" => 'nullable|image|mimes:jpg,png,jpeg',
             ],
             [
                 'title.required' => 'The Title is required',
@@ -128,7 +166,8 @@ class ProjectController extends Controller
                 'text.string' => 'The text must be a string',
                 'text.max' => 'The max length of the text must be 100 characters',
 
-                'img.string' => 'The image must be a string, please insert a valide url',
+                'img.image' => 'Please upload a file',
+                'img.image' => 'The format of the file must be: jpg, png or jpeg',
             ]
         )->validate();
         return $validator;

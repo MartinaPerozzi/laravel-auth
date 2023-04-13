@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +19,7 @@ class Project extends Model
     {
         return substr($this->text, 0, $max) . "...";
     }
-    // FUNZIONE GESTIONE SLUG
+    // FUNZIONE GESTIONE SLUG-Funzione statica-genera uno slug unico che aggiunge un "-" più un numero crescente se riscontra nel DataBase uno slug uguale
     public static function generateUniqueSlug($title)
     {
         $possible_slug = Str::of($title)->slug('-');
@@ -39,13 +40,25 @@ class Project extends Model
     }
 
     // FUNZIONI PER FORMATTARE DATE
-    public function getCreatedAttribute()
-    {
-        return date('d/m/Y H:i', strtotime($this->created_at));
-    }
+    // public function getCreatedAttribute()
+    // {
+    //     return date('d/m/Y H:i', strtotime($this->created_at));
+    // }
 
+    // MUTATOR- lo richiamo semplicemente con la freccia
+    protected function getCreatedAtAttribute($value)
+    {
+        return date('d/m/Y H:i', strtotime($value));
+    }
+    // FUNZIONI PER FORMATTARE DATE- richiamo la funzione
     public function getUpdatedAttribute()
     {
         return date('d/m/Y H:i', strtotime($this->updated_at));
+    }
+
+    // FUNZIONE GETTER PER IMMAGINI- per avere sempre o il percorso dell'immagine caricato o un placeholder qual'ora non fosse stata caricata nessuna immagine
+    public function getImageUri()
+    {
+        return $this->image ? asset('storage/' . $this->image) : 'https://picsum.photos/300/500';
     }
 }

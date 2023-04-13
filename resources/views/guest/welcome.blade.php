@@ -10,8 +10,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $project->title }}</h5>
                             <p class="card-text">{{ $project->getAbstract(10) }}</p>
-
-                            <a href="{{ route('detail', $project) }}" class="btn btn-primary">See More</a>
+                            {{-- Passaggio del parametro id nell'url --}}
+                            <a href="{{ route('detail') }}?id={{ $project->id }}" class="btn btn-primary">See More</a>
                         </div>
                     </div>
                 </div>

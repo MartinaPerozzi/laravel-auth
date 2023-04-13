@@ -30,6 +30,15 @@
         <main class="">
             @yield('actions')
             <h1>@yield('title')</h1>
+
+            @if (session('message-content'))
+                <div class="container">
+                    <div class="alert alert-{{ session('message_type') ? session('message_type') : 'success' }}">
+                        {{ session('message-content') }}
+                    </div>
+                </div>
+            @endif
+
             @yield('content')
         </main>
     </div>

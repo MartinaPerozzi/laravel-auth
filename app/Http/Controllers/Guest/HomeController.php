@@ -16,8 +16,11 @@ class HomeController extends Controller
         return view('guest.welcome', compact('projects'));
     }
 
-    public function show(Project $project)
+    public function show(Request $request)
     {
+        $project = Project::find($request->id);
+        // @dump($project);
+        // die();
         return view('guest.show', compact('project'));
     }
 
