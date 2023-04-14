@@ -95,6 +95,7 @@
         {{-- PAGINATION --}}
         {{ $projects->links() }}
     </div>
+
     {{-- MODALE --}}
     @foreach ($projects as $project)
         <!-- Modal -->

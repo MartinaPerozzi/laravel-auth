@@ -5,8 +5,8 @@
         <div class="row row-cols-4 justify-content-center">
             @forelse ($projects as $project)
                 <div class="col mb-3">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ $project->image }}" class="card-img-top" alt="...">
+                    <div class="card guest-home-cards" style="width: 18rem">
+                        <img src="{{ $project->getImageUri() }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ $project->title }}</h5>
                             <p class="card-text">{{ $project->getAbstract(10) }}</p>
