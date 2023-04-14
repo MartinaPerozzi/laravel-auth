@@ -40,6 +40,7 @@ class ProjectController extends Controller
      */
     public function create(Request $request, Project $project)
     {
+        // $shoe= new Shoe;// per mettere il model 
         //  AGGIUNGO LA ROTTA CREATE
         return view('admin.projects.create', compact('project'));
     }
@@ -65,7 +66,7 @@ class ProjectController extends Controller
 
         // Gestione dello SLUG- PARTE 1 in Model Project.php
         $project = new Project;
-        $project->fill($request->all());
+        $project->fill($data);
         $project->slug = Project::generateUniqueSlug($project->title);
         $project->save();
         return to_route('admin.projects.show', $project)
@@ -112,18 +113,16 @@ class ProjectController extends Controller
         if (Arr::exists($data, 'image')) {
             // \Log::debug('prova');
             // SE c'è già un'immagine nell'array $data
-            if ($project->image) {
-                // elimino l'immagine presente
-                Storage::delete($project->image);
-                // ALTRIMENTI, se non ci sono immagini
-            } else {
-                // Carico l'immagine nella cartella del progetto con metodo Storage::put
-                $path = Storage::put('uploads/projects', $data['image']);
-                $data['image'] = $path;
-            };
+            if ($project->image) Storage::delete($project->image);
+            // elimino l'immagine presente
+
+            // ALTRIMENTI, se non ci sono immagini
+            // Carico l'immagine nella cartella del progetto con metodo Storage::put
+            $path = Storage::put('uploads/projects', $data['image']);
+            $data['image'] = $path;
         };
 
-        $project->fill($request->all());
+        $project->fill($data);
         $project->slug = Project::generateUniqueSlug($project->title);
         $project->save();
 
